@@ -11,8 +11,7 @@ export default function usePatternGenerator() {
 		randomNumbers[4] = 0
 	}
 
-	const generatePattern = () => {
-		generateRandomNumber()
+	const playPattern = () => {
 		let i = 0
 		const compass = setInterval(() => {
 			playNote(randomNumbers[i])
@@ -20,8 +19,13 @@ export default function usePatternGenerator() {
 			if(i > 4) {
 				clearInterval(compass)
 			}
-		}, 1500)
+		}, 1540)
+	}
+
+	const generatePattern = () => {
+		generateRandomNumber()
+		playPattern()
 	} 
 
-	return[generatePattern]
+	return[generatePattern, playPattern]
 }
