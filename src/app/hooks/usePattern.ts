@@ -24,17 +24,17 @@ export function usePattern() {
 	const [play9] = useSound(pattern9)
 	const [playFinal] = useSound(patternFinal)
 
-	const playNote = (sound: any) => {
-		sound === 'p1' && play1()
-		sound === 'p2' && play2()
-		sound === 'p3' && play3()
-		sound === 'p4' && play4()
-		sound === 'p5' && play5()
-		sound === 'p6' && play6()
-		sound === 'p7' && play7()
-		sound === 'p8' && play8()
-		sound === 'p9' && play9()
-		sound === 'pFinal' && playFinal()
+	const playNote = (pattern: number) => {
+		pattern === 1 && play1()
+		pattern === 2 && play2()
+		pattern === 3 && play3()
+		pattern === 4 && play4()
+		pattern === 5 && play5()
+		pattern === 6 && play6()
+		pattern === 7 && play7()
+		pattern === 8 && play8()
+		pattern === 9 && play9()
+		pattern === 0 && playFinal()
 	}
 	return[playNote]
 }
