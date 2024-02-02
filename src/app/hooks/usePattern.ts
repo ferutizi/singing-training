@@ -25,6 +25,8 @@ export function usePattern() {
 	const [playFinal] = useSound(patternFinal)
 
 	const playNote = (pattern: number) => {
+		console.log(pattern)
+		pattern === 0 && playFinal()
 		pattern === 1 && play1()
 		pattern === 2 && play2()
 		pattern === 3 && play3()
@@ -34,7 +36,6 @@ export function usePattern() {
 		pattern === 7 && play7()
 		pattern === 8 && play8()
 		pattern === 9 && play9()
-		pattern === 0 && playFinal()
 	}
 	return[playNote]
 }
