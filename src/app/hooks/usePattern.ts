@@ -12,17 +12,17 @@ import { pattern1,
 	patternFinal
 } from '../../../public/sounds'
 
-export function usePattern() {
-	const [play1] = useSound(pattern1)
-	const [play2] = useSound(pattern2)
-	const [play3] = useSound(pattern3)
-	const [play4] = useSound(pattern4)
-	const [play5] = useSound(pattern5)
-	const [play6] = useSound(pattern6)
-	const [play7] = useSound(pattern7)
-	const [play8] = useSound(pattern8)
-	const [play9] = useSound(pattern9)
-	const [playFinal] = useSound(patternFinal)
+export function usePattern(volume: number) {
+	const [play1] = useSound(pattern1, { volume: volume })
+	const [play2] = useSound(pattern2, { volume: volume })
+	const [play3] = useSound(pattern3, { volume: volume })
+	const [play4] = useSound(pattern4, { volume: volume })
+	const [play5] = useSound(pattern5, { volume: volume })
+	const [play6] = useSound(pattern6, { volume: volume })
+	const [play7] = useSound(pattern7, { volume: volume })
+	const [play8] = useSound(pattern8, { volume: volume })
+	const [play9] = useSound(pattern9, { volume: volume })
+	const [playFinal] = useSound(patternFinal, { volume: volume })
 
 	const playNote = (pattern: number) => {
 		console.log(pattern)

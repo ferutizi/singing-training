@@ -1,15 +1,18 @@
 'use client'
 
+import { useState } from 'react'
 import './components/Note.css'
 import usePatternGenerator from './hooks/usePatternGenerator'
 
 export default function Home() {
-	const [generatePattern, repeat, currentNote] = usePatternGenerator()
+	const [help, setHelp] = useState<boolean>(true)
+	const [generatePattern, repeat, currentNote] = usePatternGenerator(help)
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
 			<h1>Singing Training</h1>
 			<button onClick={() => generatePattern()}>Start</button>
+			<button onClick={() => setHelp(!help)}>help {help === true ? ' :on' : ' :off'}</button>
 			<button onClick={() => repeat()}>Repeat</button>
 			<div className="flex gap-8">
 				<div className={`${currentNote === 1 && 'active'} flex justify-center items-center w-12 h-12 text-xl p-4 mt-24 border border-solid bg-blue-800 border-gray-50`}>C</div>

@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import { usePattern } from './usePattern'
 
-export default function usePatternGenerator() {
-	const [playNote] = usePattern() 
+export default function usePatternGenerator(help: boolean) {
+	const [volume, setVolume] = useState<number>(1.0)
+	const [playNote] = usePattern(volume) 
 	const [currentNote, setCurrentNote] = useState<number>(0)
 	const numbers: number[] = []
 	const [prevNumbers, setPrevNumbers] = useState<number[]> ([])
 	const [patternPlayed, setPatternPlayed] = useState<boolean>(false)
+	const [updatedPattern, setUpdatedPattern] = useState<boolean>(true)
 
 	const generateRandomNumber = () => {
 		numbers[0]= Math.floor(Math.random() * 9) + 1
@@ -20,11 +22,17 @@ export default function usePatternGenerator() {
 	useEffect(() => {
 		if (patternPlayed) {
 			const repeatTimeout = setTimeout(() => {
+				console.log('cambio')
+				if(help) {
+					setVolume(0.05)
+				} else {
+					setVolume(0)
+				}
 				repeat()
-			}, 9400)
+			}, 12000)
 			return () => clearTimeout(repeatTimeout)
 		}
-	}, [patternPlayed])
+	}, [updatedPattern])
 
 	const patterns = [
 		[1, 1, 1, 1],
@@ -73,7 +81,9 @@ export default function usePatternGenerator() {
 	}
 
 	const generatePattern = () => {
+		setVolume(1.0)
 		setPatternPlayed(false)
+		setUpdatedPattern(!updatedPattern)
 		setCurrentNote(0)
 		generateRandomNumber()
 		playPattern(numbers)
