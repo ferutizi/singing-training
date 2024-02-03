@@ -1,17 +1,20 @@
+'use client'
+
 import { useState } from 'react'
 import { usePattern } from './usePattern'
 
 export default function usePatternGenerator() {
 	const [playNote] = usePattern() 
 	const [currentNote, setCurrentNote] = useState<number>(0)
-	const [randomNumbers, setRandomNumbers] = useState<number[]>([])
-	
+	const numbers: number[] = []
+	const [prevNumbers, setPrevNumbers] = useState<number[]> ([])
+
 	const generateRandomNumber = () => {
-		randomNumbers[0]= Math.floor(Math.random() * 9) + 1
-		randomNumbers[1] = Math.floor(Math.random() * 9) + 1
-		randomNumbers[2] = Math.floor(Math.random() * 9) + 1
-		randomNumbers[3] = Math.floor(Math.random() * 9) + 1
-		randomNumbers[4] = 0
+		numbers[0]= Math.floor(Math.random() * 9) + 1
+		numbers[1] = Math.floor(Math.random() * 9) + 1
+		numbers[2] = Math.floor(Math.random() * 9) + 1
+		numbers[3] = Math.floor(Math.random() * 9) + 1
+		numbers[4] = 0
 	}
 
 	const patterns = [
@@ -33,31 +36,35 @@ export default function usePatternGenerator() {
 			setCurrentNote(patterns[pattern][i])
 			i++
 			if(i > 3) {
-				setCurrentNote(0)
 				clearInterval(quaver)
 			}
-		}, 320)
-	}
+		}, 400)
+	} 
 
-	const playPattern = () => {
-		console.log('random number', randomNumbers)
+	const playPattern = (numbers: number[]) => {
+		setPrevNumbers(numbers)
+		console.log('random number', numbers)
 		let i = 0
-		console.log('random number en i', randomNumbers[i])
+		console.log('random number en i', numbers[i])
 		const compass = setInterval(() => {
-			playNote(randomNumbers[i])
-			activeNote(randomNumbers[i])
-			console.log(randomNumbers[i])
+			playNote(numbers[i])
+			activeNote(numbers[i]) 
+			console.log(numbers[i])
 			i++
 			if(i > 4) {
 				clearInterval(compass)
 			}
-		}, 1550)
+		}, 2100)
+	}
+
+	const repeat = () => {
+		playPattern(prevNumbers)
 	}
 
 	const generatePattern = () => {
 		generateRandomNumber()
-		playPattern()
+		playPattern(numbers)
 	} 
 
-	return[generatePattern, playPattern, currentNote] as const
+	return[generatePattern, repeat, currentNote] as const
 }
