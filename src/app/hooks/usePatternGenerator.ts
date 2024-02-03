@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePattern } from './usePattern'
 
 export default function usePatternGenerator() {
@@ -8,14 +8,23 @@ export default function usePatternGenerator() {
 	const [currentNote, setCurrentNote] = useState<number>(0)
 	const numbers: number[] = []
 	const [prevNumbers, setPrevNumbers] = useState<number[]> ([])
+	const [patternPlayed, setPatternPlayed] = useState<boolean>(false)
 
 	const generateRandomNumber = () => {
 		numbers[0]= Math.floor(Math.random() * 9) + 1
 		numbers[1] = Math.floor(Math.random() * 9) + 1
 		numbers[2] = Math.floor(Math.random() * 9) + 1
-		numbers[3] = Math.floor(Math.random() * 9) + 1
-		numbers[4] = 0
+		numbers[3] = 0
 	}
+
+	useEffect(() => {
+		if (patternPlayed) {
+			const repeatTimeout = setTimeout(() => {
+				repeat()
+			}, 9400)
+			return () => clearTimeout(repeatTimeout)
+		}
+	}, [patternPlayed])
 
 	const patterns = [
 		[1, 1, 1, 1],
@@ -30,7 +39,7 @@ export default function usePatternGenerator() {
 		[5, 4, 3, 2]
 	]
 
-	const activeNote = (pattern) => {
+	const activeNote = (pattern: number) => {
 		let i = 0
 		const quaver = setInterval(() => {
 			setCurrentNote(patterns[pattern][i])
@@ -43,25 +52,29 @@ export default function usePatternGenerator() {
 
 	const playPattern = (numbers: number[]) => {
 		setPrevNumbers(numbers)
-		console.log('random number', numbers)
+		setPatternPlayed(true)
 		let i = 0
-		console.log('random number en i', numbers[i])
 		const compass = setInterval(() => {
-			playNote(numbers[i])
 			activeNote(numbers[i]) 
-			console.log(numbers[i])
+			playNote(numbers[i])
 			i++
-			if(i > 4) {
+			if(i > 3) {
 				clearInterval(compass)
 			}
 		}, 2100)
 	}
 
 	const repeat = () => {
-		playPattern(prevNumbers)
+		if(patternPlayed) {
+			setPatternPlayed(false)
+			setCurrentNote(0)
+			playPattern(prevNumbers)
+		}
 	}
 
 	const generatePattern = () => {
+		setPatternPlayed(false)
+		setCurrentNote(0)
 		generateRandomNumber()
 		playPattern(numbers)
 	} 
