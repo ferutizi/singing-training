@@ -89,5 +89,5 @@ export default function usePatternGenerator(help: boolean) {
 		playPattern(numbers)
 	} 
 
-	return[generatePattern, repeat, currentNote] as const
+	return[generatePattern, currentNote] as const
 }
