@@ -21,16 +21,17 @@ export default function usePatternGenerator(help: boolean) {
 
 	useEffect(() => {
 		if (patternPlayed) {
-			const repeatTimeout = setTimeout(() => {
-				console.log('cambio')
-				if(help) {
-					setVolume(0.05)
-				} else {
-					setVolume(0)
-				}
-				repeat()
-			}, 12000)
-			return () => clearTimeout(repeatTimeout)
+			setTimeout(() => {
+				const repeatTimeout = setTimeout(() => {
+					if(help) {
+						setVolume(0.05)
+					} else {
+						setVolume(0)
+					}
+					repeat()
+				}, 12000)
+				return () => clearTimeout(repeatTimeout)
+			}, 3000)
 		}
 	}, [updatedPattern])
 

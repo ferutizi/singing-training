@@ -3,26 +3,20 @@
 import { useState } from 'react'
 import './components/Note.css'
 import usePatternGenerator from './hooks/usePatternGenerator'
-import useCountdown from './hooks/useCountdown'
-
 export default function Home() {
 	const [help, setHelp] = useState<boolean>(true)
 	const [generatePattern, currentNote] = usePatternGenerator(help)
-	const [startCountdown, countdown, showCountdown] = useCountdown()
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
 			<h1 className='text-3xl'>Singing Training</h1>
-			{showCountdown &&
-				<p>{countdown}</p>
-			}
 			<div className='flex justify-between w-60'>
 				<button
 					onClick={() => setHelp(!help)}
 					className={`${help ? 'shadow-orange-300 border-orange-300 text-orange-300' : 'shadow-slate-600 border-slate-600 text-slate-400 shadow-sm'} px-4 py-2 border rounded-lg shadow-sm active:shadow-none`}
 				>Help {help === true ? ': ON' : ': OFF'}</button>
 				<button
-					onClick={() => {generatePattern(), startCountdown()}}
+					onClick={() => {generatePattern()}}
 					className='px-4 py-2 border rounded-lg shadow-sm shadow-slate-400 active:shadow-none'
 				>Start</button>
 			</div>
