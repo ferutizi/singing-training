@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './components/Note.css'
 import usePatternGenerator from './hooks/usePatternGenerator'
 import useCountdown from './hooks/useCountdown'
