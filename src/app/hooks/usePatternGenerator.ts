@@ -11,6 +11,7 @@ export default function usePatternGenerator(help: boolean) {
 	const [prevNumbers, setPrevNumbers] = useState<number[]> ([])
 	const [patternPlayed, setPatternPlayed] = useState<boolean>(false)
 	const [updatedPattern, setUpdatedPattern] = useState<boolean>(true)
+	const [listen, setListen] = useState(true)
 
 	const generateRandomNumber = () => {
 		numbers[0]= Math.floor(Math.random() * 9) + 1
@@ -60,6 +61,7 @@ export default function usePatternGenerator(help: boolean) {
 	} 
 
 	const playPattern = (numbers: number[]) => {
+		setListen(!listen)
 		setPrevNumbers(numbers)
 		setPatternPlayed(true)
 		let i = 0
@@ -90,5 +92,5 @@ export default function usePatternGenerator(help: boolean) {
 		playPattern(numbers)
 	} 
 
-	return[generatePattern, currentNote] as const
+	return[generatePattern, currentNote, listen] as const
 }
